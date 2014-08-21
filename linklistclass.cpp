@@ -76,15 +76,31 @@ public:
 		}
 	}
 
+	void delBeg()	{
+		Node *temp;
+		
+		if(head == NULL)	{
+			cout<<" ERROR: Cannot delete empty linked list\n\n";
+		}
+		else	{
+			cout<<"\n Deleting element: "<<head->getData()<<"\n\n";
+			head = head->getNext();	//make head point to the next element in the linked list
+		}
+	}
+
 	void traverse()	{
 		Node *loc = head;
+		if(head == NULL)	{
+			cout<<" ERROR: EMPTY LIST!\n";
+			return;
+		}
 
 		while(loc != NULL)	{			
 			cout<<"-->"<<(loc->getData());
 			loc = loc->getNext();
 		}
 
-		cout<<"\n 
+		cout<<"\n\n";
 	}
 
 };
@@ -96,6 +112,9 @@ int main()	{
 	do	{
 		cout<<"\n 1: Insert into beginning";
 		cout<<"\n 2: Insert into end";
+
+		cout<<"\n 3: Delete from beginning";
+		
 		cout<<"\n 9: Traverse";
 		cout<<"\n 0: EXIT";
 		cout<<"\n Enter Your Choice: ";
@@ -109,9 +128,12 @@ int main()	{
 					cin>>num;
 					L.insEnd(num);
 					break;
+			case 3: L.delBeg();
+					break;
 			case 9: cout<<"\n Elements in the linked list: "; L.traverse();
 					break;
-			case 0: cout<<"\n Program under development!";
+			case 0: cout<<"\n Program under development by Arjun K. Babu";
+					cout<<"\n https://github.com/arjunkbabu/linked_list";
 					break;
 		   default: cout<<"\n ERROR: Invalid Choice!";
 		  			break;
