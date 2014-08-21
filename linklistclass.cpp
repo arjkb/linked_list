@@ -54,14 +54,37 @@ public:
 		}
 	}
 
+	void insEnd(int dd)	{
+		Node *temp = new Node();
+		temp->setData(dd);
+		temp->setNext(NULL);
+		
+		Node *loc;
+
+		if(head == NULL)	{
+			head = temp;
+		}
+
+		else	{
+			loc = head;
+
+			while(loc->getNext() != NULL)	{	//loop to traverse to the last node in the list
+				loc = loc->getNext();
+			}
+		
+			loc->setNext(temp); 		//make loc(last node) point to the newly created node
+		}
+	}
+
 	void traverse()	{
 		Node *loc = head;
 
-		while(loc != NULL)	{
-		//	cout<<"\n Hey!";							//<==
-			cout<<"-->"<< (loc->getData())<<endl;
+		while(loc != NULL)	{			
+			cout<<"-->"<<(loc->getData());
 			loc = loc->getNext();
 		}
+
+		cout<<"\n 
 	}
 
 };
@@ -72,6 +95,7 @@ int main()	{
 	int num;
 	do	{
 		cout<<"\n 1: Insert into beginning";
+		cout<<"\n 2: Insert into end";
 		cout<<"\n 9: Traverse";
 		cout<<"\n 0: EXIT";
 		cout<<"\n Enter Your Choice: ";
@@ -80,6 +104,10 @@ int main()	{
 			case 1: cout<<"\n Enter an element to insert into beginning of the linked list: ";
 					cin>>num;
 					L.insBeg(num);
+					break;
+			case 2: cout<<"\n Enter an element to insert into beginning of the linked list: ";
+					cin>>num;
+					L.insEnd(num);
 					break;
 			case 9: cout<<"\n Elements in the linked list: "; L.traverse();
 					break;
