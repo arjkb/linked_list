@@ -1,7 +1,17 @@
 /*
 
 	Program to implement a link-list using class for Node and LinkList
-	
+		1. Insert into beginning
+		2. Insert into end
+		3. Insert after specific element
+		
+		4. Delete from beginning
+		5. Delete from end
+
+		8. Search
+		9. Traverse
+		0. EXIT
+			
 	420H14 -- Arjun Krishna Babu
 */
 #include<iostream>
@@ -41,7 +51,7 @@ public:
 		head = NULL;	//very imp. Ensures list is initially empty
 	}
 	void insBeg(int dd)	{
-		Node *temp = new Node();	//creates a new noce
+		Node *temp = new Node();	//creates a new node
 		temp->setData(dd);			//sets value to the new node
 
 		if(head == NULL)	{	//if the link-list is empty
@@ -80,12 +90,59 @@ public:
 		Node *temp;
 		
 		if(head == NULL)	{
-			cout<<" ERROR: Cannot delete empty linked list\n\n";
+			cout<<" ERROR: Cannot delete empty linked list";
 		}
 		else	{
-			cout<<"\n Deleting element: "<<head->getData()<<"\n\n";
+			temp = head;
+
+			cout<<"\n Deleting element: "<<temp->getData()<<"\n\n";
 			head = head->getNext();	//make head point to the next element in the linked list
+			delete temp;
 		}
+	}
+
+	void delEnd()	{
+
+		Node *temp;
+		Node *prev;
+
+		if(head == NULL)	{
+			cout<<"\n ERROR: Cannot delete empty linked list";
+		}
+
+		else if(head->getNext() == NULL)	{	//if only one element exists in the linked list
+			temp = head;
+			head = NULL;
+			delete temp;		//free the allocated memory
+		}
+		else	{
+			temp = head->getNext();
+			prev = head;
+
+			while( temp->getNext() != NULL)	{ //traverse to the end of the linked list
+				temp = temp->getNext();
+				prev = prev->getNext();
+			}
+
+			prev->setNext(temp->getNext());
+			
+			cout<<"\n Deleting element: "<<temp->getData();
+			delete temp;		//free the allocated memory
+		}
+	}
+
+	bool search(int item)	{
+		Node *temp = head;
+
+		while(temp != NULL)	{
+			if(temp->getData() == item)	{
+				return true;
+			}
+			else
+				temp = temp->getNext();
+		}
+		
+		return false;		//control reaches here only after finishing while loop (==> element absent in list)
 	}
 
 	void traverse()	{
@@ -113,8 +170,10 @@ int main()	{
 		cout<<"\n 1: Insert into beginning";
 		cout<<"\n 2: Insert into end";
 
-		cout<<"\n 3: Delete from beginning";
-		
+		cout<<"\n 4: Delete from beginning";
+		cout<<"\n 5. Delete from end";
+
+		cout<<"\n 8: Search";
 		cout<<"\n 9: Traverse";
 		cout<<"\n 0: EXIT";
 		cout<<"\n Enter Your Choice: ";
@@ -128,7 +187,16 @@ int main()	{
 					cin>>num;
 					L.insEnd(num);
 					break;
-			case 3: L.delBeg();
+			case 4: L.delBeg();
+					break;
+			case 5: L.delEnd();
+					break;
+			case 8: cout<<"\n Enter element to search for in the list: ";
+					cin>>num;
+					if( L.search(num) )
+						cout<<"\n Element found!";
+					else
+						cout<<"\n Element not found!";
 					break;
 			case 9: cout<<"\n Elements in the linked list: "; L.traverse();
 					break;
@@ -138,6 +206,8 @@ int main()	{
 		   default: cout<<"\n ERROR: Invalid Choice!";
 		  			break;
 		}
+
+		cout<<"\n\n";
 	}while(choice != 0);
 
    cout<<"\n\n";
