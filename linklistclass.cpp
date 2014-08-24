@@ -2,12 +2,13 @@
 	FILE: linklistclass.cpp
 	--------------------------------------------------------------------
 	Program to implement a link-list using class for Node and LinkList
-		1. Insert into beginning
-		2. Insert into end
+		1. Insert at beginning
+		2. Insert at end
 		3. Insert after specific element
 		
 		4. Delete from beginning
-		5. Delete from end
+		5. Delete specific node
+		6. Delete from end
 
 		8. Search
 		9. Traverse
