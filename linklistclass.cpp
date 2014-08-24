@@ -1,5 +1,6 @@
 /*
-
+	FILE: linklistclass.cpp
+	--------------------------------------------------------------------
 	Program to implement a link-list using class for Node and LinkList
 		1. Insert into beginning
 		2. Insert into end
@@ -11,8 +12,14 @@
 		8. Search
 		9. Traverse
 		0. EXIT
-			
-	420H14 -- Arjun Krishna Babu
+	------------------------------------------		
+	|	CODER	: Arjun Krishna Babu		 |
+	|	DATE	: 20 - August - 2014		 |
+	|										 |
+	|	COMPILER	: G++					 |
+	|	OS			: Ubuntu 12.04 LTS		 |
+	|	PROCESSOR	: 4th gen. Intel Core i5 |
+	------------------------------------------	
 */
 #include<iostream>
 
@@ -42,8 +49,10 @@ public:
 	
 	void insBeg(int);
 	void insEnd(int);
+	void insAfter(int after, int item);
 	
 	void delBeg();
+	void delNode(int item);		//deletes node containing specified item
 	void delEnd();
 	
 	bool search(int);
@@ -53,18 +62,21 @@ public:
 int main()	{
 	LinkList L;
 	int choice = 0;
-	int num;
+	int num, pos;
 	do	{
-		cout<<"\n 1: Insert into beginning";
-		cout<<"\n 2: Insert into end";
+		cout<<"\n [LINKED LIST OPERATIONS]\n";
+		cout<<"\n 1: Insert at beginning";
+		cout<<"\n 2: Insert at end";
+		cout<<"\n 3: Insert after specific element";
 
 		cout<<"\n 4: Delete from beginning";
-		cout<<"\n 5. Delete from end";
+		cout<<"\n 5: Delete specific node";
+		cout<<"\n 6. Delete from end";
 
 		cout<<"\n 8: Search";
 		cout<<"\n 9: Traverse";
 		cout<<"\n 0: EXIT";
-		cout<<"\n Enter Your Choice: ";
+		cout<<"\n\n Enter Your Choice: ";
 			cin>>choice;
 		switch(choice)	{
 			case 1: cout<<"\n Enter an element to insert into beginning of the linked list: ";
@@ -75,9 +87,19 @@ int main()	{
 					cin>>num;
 					L.insEnd(num);
 					break;
+			case 3: cout<<"\n Enter the element to insert: ";
+					cin>>num;
+					cout<<"\n After which element should "<<num<<" be inserted: ";
+					cin>>pos;
+					L.insAfter(pos, num);
+					break;
 			case 4: L.delBeg();
 					break;
-			case 5: L.delEnd();
+			case 5: cout<<"\n Enter the element to be deleted: ";
+					cin>>num;
+					L.delNode(num);
+					break;
+			case 6: L.delEnd();
 					break;
 			case 8: cout<<"\n Enter element to search for in the list: ";
 					cin>>num;
@@ -156,6 +178,31 @@ void LinkList::insEnd(int dd)	{
 	}
 }
 
+void LinkList::insAfter(int after, int dd)	{
+	Node *temp = new Node();
+	temp->setData(dd);
+
+	Node *loc = head;
+
+	bool found = false;
+
+	while(loc != NULL)	{
+
+		if(loc->getData() == after)	{
+			temp->setNext( loc->getNext() );
+			loc->setNext(temp);
+			found = true;
+			break;
+		}
+		else
+			loc = loc->getNext();
+	}
+	if(!found)	{
+		cout<<"\n ERROR: Cannot find "<<after<<" in the linked list";
+		cout<<"\n No changes have been made to the linked list";
+	}
+}
+
 void LinkList::delBeg()	{
 	Node *temp;
 	
@@ -167,6 +214,32 @@ void LinkList::delBeg()	{
 		cout<<"\n Deleting element: "<<temp->getData()<<"\n\n";
 		head = head->getNext();	//make head point to the next element in the linked list
 		delete temp;
+	}
+}
+
+void LinkList::delNode(int dd)	{
+	Node *loc = head;
+	Node *prev;
+	if( head->getData() == dd )	{	//if node to be deleted is the first node
+		head = head->getNext();
+		delete loc;
+		return;
+	}
+
+	else	{
+		prev = head;
+		loc = head->getNext();
+		while(loc != NULL)	{
+			if( loc->getData() == dd )	{
+				prev->setNext( loc->getNext() );	//set next address of pevious node to next address of node to be deleted
+				delete loc;							//deallocate memory
+				break;
+			}
+			else	{
+				loc   = loc->getNext();
+				prev  = prev->getNext();
+			}
+		} //end of while()
 	}
 }
 
