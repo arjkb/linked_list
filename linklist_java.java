@@ -1,7 +1,28 @@
 /*
-	Program to implement a linked list in Java.
+	FILE: linklist_java.java
+	------------------------------------------------
+	Program to implement linked list in Java, 
+	capable of performing the following operations:
 
-	326H14 -- Arjun Krishna Babu
+		1. Insert to beginning
+		2. Insert to end
+		3. Insert after specific node
+
+		4. Delete from beginning
+		5. Delete from end
+		6. Delete specific node
+
+		7. Search
+		9. Traverse
+		0. EXIT
+	-------------------------------------------------
+
+	CODER	: Arjun Krishna Babu
+	DATE	: 27 - August - 2014
+
+	COMPILER	: JAVAC
+	OS			: Ubuntu 12.04 LTS
+	-------------------------------------------------
 */
 
 import java.util.*;
@@ -49,14 +70,46 @@ class LinkList	{
 		}
 	}
 
-	public void dispAll()	{
+	public void insEnd(int d)	{
+		Node temp = new Node();
+		temp.setData(d);
+		temp.setNext(null);
+			
+		Node loc = head;
+
+		if( head == null )	{
+			head = temp;
+		}
+		else	{
+			while( loc.getNext() != null )	{	//traverse to the last node in the list
+				loc = loc.getNext();
+			}
+			loc.setNext(temp);
+		}
+	}
+
+	public void delBeg()	{
 		Node temp;
 
-		temp = head;
+		if( head == null )	
+			System.out.print("\n ERROR: Underflow!");
+		else {
+			temp = head;
+			System.out.print("\n Deleting Element: " + temp.getData() );
+			head = head.getNext();
+		}
+	}
 
-		while( temp != null )	{
-			System.out.print("-->" + temp.getData() );
-			temp = temp.getNext();
+	public void traverse()	{
+		Node temp;
+		temp = head;
+		if( head == null )	
+			System.out.print("\n ERROR: No elements in linked list!");
+		else	{
+			while( temp != null )	{
+				System.out.print("-->" + temp.getData() );
+				temp = temp.getNext();
+			}
 		}
 	}
 }
@@ -73,6 +126,7 @@ class linklist_java	{
 		LinkList L = new LinkList();
 
 		do	{
+			SOP("\n [JAVA IMPLEMENTATION OF LINKED LIST]");
 			SOP("\n 1. Insert into beginning");
 			SOP("\n 2. Insert into end");
 			SOP("\n 4. Delete from beginning");
@@ -85,10 +139,17 @@ class linklist_java	{
 						num = in.nextInt();
 						L.insBeg(num);
 						break;
+				case 2: SOP("\n Enter element to insert at the end of linked list: ");
+						num = in.nextInt();
+						L.insEnd(num);
+						break;
+				case 4: L.delBeg();
+						break;
 				case 9: SOP("\n Elements of linked list: ");
-						L.dispAll();
+						L.traverse();
 						break;
 				case 0: SOP("\n Program under development by Arjun Krishna Babu");
+						SOP("\n https://github.com/arjunkbabu/linked_list");
 						break;
 			   default: SOP("\n Invalid Choice!");
 			}
