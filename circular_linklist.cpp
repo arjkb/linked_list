@@ -48,6 +48,8 @@ public:
 	void insTail(int);
 	void insHead(int);
 	void delTail();
+	void delHead();
+	bool search(int);
 	void traverse();
 };
 
@@ -65,11 +67,11 @@ int main()	{
 //	 	cout<<"\n 3. Insert after an element";
 	
 		cout<<"\n 4. Delete tail";
-	/*
 		cout<<"\n 5. Delete head";
+	/*
 		cout<<"\n 6. Delete a particular node";
-		cout<<"\n 7. Search";
-	*/	
+	*/
+		cout<<"\n 7. Search";	
 		cout<<"\n 9. Traverse";
 		cout<<"\n 0. EXIT";
 		cout<<"\n Enter Your Choice: ";
@@ -86,6 +88,16 @@ int main()	{
 					break;
 			case 4: CL.delTail();
 					break;
+			case 5: CL.delHead();
+					break;
+			case 7: cout<<"\n Enter an element to seach in the linked list: ";
+					cin>>num;
+					if( CL.search(num) )
+						cout<<"\n Element FOUND!";
+					else
+						cout<<"\n Element NOT FOUND!";
+					
+					break;					
 			case 9: CL.traverse();
 					break;
 			case 0: cout<<"\n Program under development!";
@@ -169,9 +181,48 @@ void CircleLink::delTail()	{
 
 		loc->setNext( tail->getNext() );	//make it point to start node
 		tail = loc; 
-				
+		
+		cout<<"\n Deleting Element: "<<temp->getData();		
 		delete temp;	
 	}
+}
+
+void CircleLink::delHead()	{
+	Node *temp;
+	
+	if( isEmpty() )	{
+		cerr<<"\n ERROR: Empty Linked List!";
+	}
+	else if( tail->getNext() == tail )	{
+		temp = tail;
+		cout<<"\n Deleting Element: "<<temp->getData();
+		tail = NULL;
+		delete temp;
+	}
+	else {  
+		temp = tail->getNext();
+		tail->setNext( temp->getNext() );
+		cout<<"\n Deleting Element: "<<temp->getData();
+		delete temp;
+	}
+}
+
+bool CircleLink::search(int key)	{
+	Node *temp;
+	
+	if( isEmpty() )
+		return false;
+	else {
+		temp = tail;
+		do {
+			if( temp->getData() == key )	
+				return true;
+			else
+				temp = temp->getNext();
+		} while ( temp != tail );
+	}
+	
+	return false;	//control reaches here only if the element is not in the list	
 }
 	
 void CircleLink::traverse()	{
